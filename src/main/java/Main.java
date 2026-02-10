@@ -27,8 +27,7 @@ public class Main {
             boolean running = true;
 
             while (running) {
-                controller.readKey(); // контроллер читает ввод и постит события
-
+                controller.readKey(); // контроллер читает ввод и постит событи
             }
         } finally {
             Toolkit.shutdown();
