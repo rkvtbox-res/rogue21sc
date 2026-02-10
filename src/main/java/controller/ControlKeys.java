@@ -13,7 +13,6 @@ public enum ControlKeys {
 
     NONE;
 
-    public static void inputCommand() {
 
     }
-}
+

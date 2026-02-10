@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'org.roguegame'
@@ -12,9 +13,10 @@ repositories {
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation files('libs/jcurses.jar')
-}
+    testImplementation ('org.junit.jupiter:junit-jupiter')
+    // прокидываем лантерну
+    implementation("com.googlecode.lanterna:lanterna:3.1.2")
+    }
 
 test {
     useJUnitPlatform()
@@ -22,34 +24,18 @@ test {
 
 run {
     standardInput = System.in
-    systemProperty 'java.library.path', "libs"
-
+    systemProperty 'java.library.path', 'libs'
 }
 
 application {
     mainClass = 'Main'
-    applicationDefaultJvmArgs = ['-Djava.library.path=$APP_HOME/libs']
 
 }
 
-// Копируем .so файл в lib
-distributions {
-    main {
-        contents {
-            from('libs') {
-                include 'libjcurses64.so'
-                into 'lib'
-            }
-        }
+// интегрируем плагин для сборки джарника со всеми плагинами
+shadowJar {
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
     }
-}
-
-
-// Собираем архив, включающий необходимые библиотеки
-task packageDist(type: Zip) {
-    dependsOn installDist
-    from 'build/install/roguegame21Sc'
-    archiveFileName = 'roguegame-${version}.zip'
-    destinationDirectory = file('build/distributions')
 }
 

@@ -1,14 +1,19 @@
 package controller;
 
-import jcurses.system.InputChar;
-import jcurses.system.Toolkit;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.screen.Screen;
+
+import java.io.IOException;
+
 
 public class InputCommands {
 
-    public static ControlKeys readInput() {
+    public static ControlKeys readInput(Screen screen) throws IOException {
 
-        InputChar input = Toolkit.readCharacter();
-
+        KeyStroke input = screen.pollInput();
+        if (input == null) {
+            return null;
+        }
 
         switch (input.getCharacter()) {
             case 'w' -> {
@@ -36,10 +41,7 @@ public class InputCommands {
             default -> {
                 return ControlKeys.NONE;
             }
-
         }
-
-
     }
 }
 
