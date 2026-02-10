@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.roguegame'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation files('libs/jcurses.jar')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+run {
+    standardInput = System.in
+    systemProperty 'java.library.path', "libs"
+
+}
+
+application {
+    mainClass = 'Main'
+    applicationDefaultJvmArgs = ['-Djava.library.path=$APP_HOME/libs']
+
+}
+
+// Копируем .so файл в lib
+distributions {
+    main {
+        contents {
+            from('libs') {
+                include 'libjcurses64.so'
+                into 'lib'
+            }
+        }
+    }
+}
+
+
+// Собираем архив, включающий необходимые библиотеки
+task packageDist(type: Zip) {
+    dependsOn installDist
+    from 'build/install/roguegame21Sc'
+    archiveFileName = 'roguegame-${version}.zip'
+    destinationDirectory = file('build/distributions')
+}
+
