@@ -1,6 +1,6 @@
 package model;
 
-public class PlayerStage {
+public class PlayerState {
     private int playerPosX = 5;
     private int playerPosY = 5;
 

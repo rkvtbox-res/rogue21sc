@@ -1,0 +1,44 @@
+package presentation;
+
+import com.googlecode.lanterna.screen.Screen;
+import eventbus.EventBus;
+import eventbus.Events;
+import model.MainMenuState;
+import model.ModelState;
+
+import java.io.IOException;
+
+
+public class Render {
+    private final EventBus bus;
+    private final Screen screen;
+    private final MainMenuState menuState;
+    private final ModelState modelState;
+
+    public Render (EventBus bus, Screen screen, MainMenuState menuState, ModelState modelState) {
+        this.bus = bus;
+        this.screen = screen;
+        this.menuState = menuState;
+        this.modelState = modelState;
+
+        bus.subscribe(Events.RenderRefresh.class, e -> {
+            try {
+                render();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+
+
+
+    public void render() throws IOException {
+        switch (modelState.getState()) {
+            case MENU -> RenderMenu.render(screen, menuState);
+            //case GAME -> renderGame.render(screen, gameState);
+            case QUIT -> {} // ничего не рисуем
+        }
+    }
+
+
+}

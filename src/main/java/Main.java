@@ -1,9 +1,13 @@
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
-import controller.KeyboardController;
-import debug.DebugKeyLogger;
+import controller.Controller;
 import eventbus.EventBus;
+import eventbus.Events;
+import model.MainMenuState;
+import model.ModelLogic;
+import model.ModelState;
+import presentation.Render;
 
 import java.io.IOException;
 
@@ -16,22 +20,34 @@ public class Main {
 
         // инит буфера
         screen.startScreen();
+        screen.setCursorPosition(null);
+
 
         try {
-            // создаем шину
+            // СЛОЙ ШИНЫ
             EventBus bus = new EventBus();
 
-            // создаем контроллер клавиатуры через переменную для обращения
-            KeyboardController controller = new KeyboardController(bus, screen);
+            // СЛОЙ ВВОДА
+            Controller controller = new Controller(bus, screen);
 
-            // создаем объект дебаггера для подписки
-            new DebugKeyLogger(bus, screen);
+            // СЛОЙ МОДЕЛИ
+
+            ModelState modelState = new ModelState();
+            MainMenuState mainMenuState = new MainMenuState();
+            new ModelLogic(bus, modelState, mainMenuState);
+
+            new Render(bus, screen, mainMenuState, modelState);
+            // Отрисовываем меню - можно заменить на заставку
+            bus.post(new Events.RenderRefresh());
+
+
+            // СЛОЙ ВЫВОДА
+
 
             boolean running = true;
-
             while (running) {
                 controller.readKey(); // контроллер читает ввод и постит события
-
+                // нужно отслеживать глобальное состояние игры
 
                 Thread.sleep(10);
             }
