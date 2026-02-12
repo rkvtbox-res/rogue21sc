@@ -4,9 +4,8 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import controller.Controller;
 import eventbus.EventBus;
 import eventbus.Events;
-import model.MainMenuState;
-import model.ModelLogic;
-import model.ModelState;
+import model.*;
+import model.gamestate.GameState;
 import presentation.Render;
 
 import java.io.IOException;
@@ -31,12 +30,12 @@ public class Main {
             Controller controller = new Controller(bus, screen);
 
             // СЛОЙ МОДЕЛИ
-
             ModelState modelState = new ModelState();
-            MainMenuState mainMenuState = new MainMenuState();
+            MainMenuState mainMenuState = new MainMenuState(modelState);
             new ModelLogic(bus, modelState, mainMenuState);
+            GameState gameState = new GameState();
 
-            new Render(bus, screen, mainMenuState, modelState);
+            new Render(bus, screen, mainMenuState, modelState, gameState);
             // Отрисовываем меню - можно заменить на заставку
             bus.post(new Events.RenderRefresh());
 

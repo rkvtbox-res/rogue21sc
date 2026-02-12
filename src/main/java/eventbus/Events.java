@@ -7,12 +7,24 @@ public class Events {
 
     public interface Event {}
 
-    // постит конроллер
-
+    // событие передает команду управления
     public record KeyPressed(ControllerCommands value) implements Event {}
+
+    // обновляем экран
     public record RenderRefresh() implements Event {};
 
+    // Начало новой игры
+    public record StartNewGame() implements Event {};
 
+    // Сохранить игру
+    public record SaveGame() implements Event {};
 
+    // Загрузить игру
+    public record LoadGame() implements Event {};
 
+    // таблица рекордов
+    public record HallOfFame() implements Event {};
+
+    // выход
+    public record QuitRequest() implements Event {};
 }

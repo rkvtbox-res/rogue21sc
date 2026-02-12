@@ -15,9 +15,12 @@ public class ModelLogic {
         this.modelState = modelState;
         this.mainMenuState = mainMenuState;
 
+        // читаем события нажатия клавиш
         bus.subscribe(Events.KeyPressed.class, e -> keyPressed(e.value()));
-    }
 
+        // читаем события выбора пунктов меню
+        bus.subscribe(Events.StartNewGame.class, e -> startNewGame());
+    }
 
     private void keyPressed (ControllerCommands key) {
         if (key == null) return;
@@ -32,9 +35,30 @@ public class ModelLogic {
                     mainMenuState.menuMoveDown();
                     bus.post(new Events.RenderRefresh());
                 }
+                case ENTER -> {
+                    menuSelection();
+                }
             }
         }
+    }
 
+    private void menuSelection() {
+        switch (mainMenuState.getSelectedMenu()) {
+            case 0 -> {
+                modelState.setState(ModelState.State.GAME);
+                bus.post(new Events.StartNewGame());
+                bus.post(new Events.RenderRefresh());
+            }
+            case 1 -> bus.post(new Events.LoadGame());
+            case 2 -> bus.post(new Events.RenderRefresh());
+            case 3 -> bus.post(new Events.QuitRequest());
+        }
+    }
+
+
+    private void startNewGame() {
+
+        //bus.post(new Events.RenderRefresh());
     }
 
 }
