@@ -20,8 +20,12 @@ public class ModelLogic {
 
         // читаем события выбора пунктов меню
         bus.subscribe(Events.StartNewGame.class, e -> startNewGame());
+
+        bus.subscribe(Events.EnteredNameAddChar.class, e -> addCharToUserName(e.userName()));
+        bus.subscribe(Events.EnteredNameBackspace.class, e -> removeCharInUserName());
     }
 
+    // основная логика управления
     private void keyPressed (ControllerCommands key) {
         if (key == null) return;
 
@@ -42,6 +46,8 @@ public class ModelLogic {
         }
     }
 
+
+    // логика выбора меню - по выбору постим соответствующее событие
     private void menuSelection() {
         switch (mainMenuState.getSelectedMenu()) {
             case 0 -> {
@@ -55,10 +61,20 @@ public class ModelLogic {
         }
     }
 
-
     private void startNewGame() {
-
         //bus.post(new Events.RenderRefresh());
+    }
+
+    private void addCharToUserName(char ch) {
+        modelState.addCharToUserName(ch);
+    }
+
+    private void removeCharInUserName() {
+        modelState.removeCharFromUserName();
+    }
+
+    private void submitUserName () {
+        modelState.setState(ModelState.State.MENU);
     }
 
 }

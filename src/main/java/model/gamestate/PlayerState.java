@@ -1,6 +1,7 @@
 package model.gamestate;
 
 public class PlayerState {
+
     private int playerPosX = 5;
     private int playerPosY = 5;
 

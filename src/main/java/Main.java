@@ -26,14 +26,14 @@ public class Main {
             // СЛОЙ ШИНЫ
             EventBus bus = new EventBus();
 
-            // СЛОЙ ВВОДА
-            Controller controller = new Controller(bus, screen);
-
             // СЛОЙ МОДЕЛИ
             ModelState modelState = new ModelState();
             MainMenuState mainMenuState = new MainMenuState(modelState);
             new ModelLogic(bus, modelState, mainMenuState);
             GameState gameState = new GameState();
+
+            // СЛОЙ ВВОДА
+            Controller controller = new Controller(bus, screen, modelState);
 
             new Render(bus, screen, mainMenuState, modelState, gameState);
             // Отрисовываем меню - можно заменить на заставку

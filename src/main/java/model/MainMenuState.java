@@ -6,7 +6,7 @@ public class MainMenuState {
     private final ModelState modelState;
 
     private final String gameTitle = "RogueGame 21Sc Project";
-    private final String gameCreators = "";
+    private final String playerName = "";
 
     private final String[] menuItemsNew = {"New Game", "Load game", "Hall of Fame", "Quit"};
     private final String[] menuItemsPaused = {"Resume Game", "New Game", "Hall of Fame", "Quit" };
@@ -14,6 +14,7 @@ public class MainMenuState {
 
     public MainMenuState(ModelState modelState) {
         this.modelState = modelState;
+
     }
 
     public String getGameTitle() {

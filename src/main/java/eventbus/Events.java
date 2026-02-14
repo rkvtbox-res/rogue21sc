@@ -10,6 +10,11 @@ public class Events {
     // событие передает команду управления
     public record KeyPressed(ControllerCommands value) implements Event {}
 
+    // ввод имени
+    public record EnteredNameAddChar(char userName) implements Event {};
+    public record EnteredNameSubmit() implements Event {}
+    public record EnteredNameBackspace() implements Event {}
+
     // обновляем экран
     public record RenderRefresh() implements Event {};
 
