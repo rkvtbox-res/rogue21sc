@@ -47,7 +47,7 @@ public class Render {
         switch (modelState.getState()) {
             case ENTER_NAME -> RenderTitle.render(screen, renderState, modelState.getUserName());
             case MENU -> RenderMenu.render(screen, menuState, renderState, modelState.getUserName());
-            case GAME -> RenderGame.render(screen, gameState, renderState);
+            case GAME -> RenderGame.render(screen, gameState, renderState, modelState.getUserName());
             case QUIT -> {} // ничего не рисуем
         }
     }

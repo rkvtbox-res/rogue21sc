@@ -43,11 +43,11 @@ public class RenderState {
     }
 
     public int borderLogFirstLine() {
-        return getWindowHeight();
+        return getWindowHeight() - 10;
     }
 
     public int borderLogLastLine () {
-        return getWindowHeight() - 10;
+        return getWindowHeight()-1;
     }
 
 }
