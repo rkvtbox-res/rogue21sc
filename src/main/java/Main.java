@@ -45,8 +45,11 @@ public class Main {
 
             boolean running = true;
             while (running) {
-                controller.readKey(); // контроллер читает ввод и постит события
-                // нужно отслеживать глобальное состояние игры
+                controller.controller(); // контроллер читает ввод и постит события
+
+                if (modelState.getState() == ModelState.State.QUIT) {
+                    running = false;
+                }
 
                 Thread.sleep(10);
             }

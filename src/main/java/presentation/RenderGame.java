@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class RenderGame {
 
-   public static void render (Screen screen, GameState gameState) throws IOException {
+   public static void render (Screen screen, GameState gameState, RenderState renderState)throws IOException {
        screen.clear();
 
        TextGraphics graphics = screen.newTextGraphics();

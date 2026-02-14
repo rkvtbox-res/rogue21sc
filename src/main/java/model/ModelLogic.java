@@ -15,14 +15,18 @@ public class ModelLogic {
         this.modelState = modelState;
         this.mainMenuState = mainMenuState;
 
-        // читаем события нажатия клавиш
+
+        // читаем события нажатия клавиш - команды меню и игры
         bus.subscribe(Events.KeyPressed.class, e -> keyPressed(e.value()));
 
         // читаем события выбора пунктов меню
         bus.subscribe(Events.StartNewGame.class, e -> startNewGame());
+        bus.subscribe(Events.QuitRequest.class, e -> quitRequest());
 
+        // читаем события ввода имени
         bus.subscribe(Events.EnteredNameAddChar.class, e -> addCharToUserName(e.userName()));
         bus.subscribe(Events.EnteredNameBackspace.class, e -> removeCharInUserName());
+        bus.subscribe(Events.EnteredNameSubmit.class, e -> submitUserName());
     }
 
     // основная логика управления
@@ -66,15 +70,29 @@ public class ModelLogic {
     }
 
     private void addCharToUserName(char ch) {
+        if (modelState.getState() != ModelState.State.ENTER_NAME) return;
         modelState.addCharToUserName(ch);
+        bus.post(new Events.RenderRefresh());
+
     }
 
     private void removeCharInUserName() {
+        if (modelState.getState() != ModelState.State.ENTER_NAME) return;
         modelState.removeCharFromUserName();
+        bus.post(new Events.RenderRefresh());
+
     }
 
     private void submitUserName () {
         modelState.setState(ModelState.State.MENU);
+        bus.post(new Events.RenderRefresh());
+
+    }
+
+    private void quitRequest() {
+        modelState.setState((ModelState.State.QUIT));
+        bus.post(new Events.RenderRefresh());
+
     }
 
 }

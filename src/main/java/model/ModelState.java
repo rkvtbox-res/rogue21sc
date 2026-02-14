@@ -27,11 +27,13 @@ public class ModelState {
     }
 
     public void removeCharFromUserName() {
-        userName.deleteCharAt(userName.length() - 1);
+        if (userName.length() > 0) {
+            userName.deleteCharAt(userName.length() - 1);
+        }
     }
 
     public String getUserName () {
-        return toString();
+        return userName.toString();
     }
 
 

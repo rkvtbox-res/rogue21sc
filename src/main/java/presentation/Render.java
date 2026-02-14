@@ -17,7 +17,6 @@ public class Render {
     private final ModelState modelState;
     private final GameState gameState;
     private final RenderState renderState;
-    private final String userName;
 
 
 
@@ -31,7 +30,6 @@ public class Render {
         this.modelState = modelState;
         this.gameState = gameState;
         this.renderState = new RenderState(this.screen);
-        this.userName = modelState.getUserName();
 
 
         bus.subscribe(Events.RenderRefresh.class, e -> {
@@ -47,9 +45,9 @@ public class Render {
 
     public void render() throws IOException {
         switch (modelState.getState()) {
-            case ENTER_NAME -> RenderTitle.render(screen, renderState, userName);
-            case MENU -> RenderMenu.render(screen, menuState);
-            case GAME -> RenderGame.render(screen, gameState);
+            case ENTER_NAME -> RenderTitle.render(screen, renderState, modelState.getUserName());
+            case MENU -> RenderMenu.render(screen, menuState, renderState, modelState.getUserName());
+            case GAME -> RenderGame.render(screen, gameState, renderState);
             case QUIT -> {} // ничего не рисуем
         }
     }

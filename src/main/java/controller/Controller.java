@@ -34,6 +34,7 @@ public class Controller {
 
     public void readKey() throws IOException {
         ControllerCommands key = ControllerReadCommands.readInput(screen);
+        if (key == null || key == ControllerCommands.NONE) return;
 
         bus.post(new Events.KeyPressed(key));
     }
@@ -41,6 +42,7 @@ public class Controller {
     public void readLine() throws IOException {
         // считали значение
         KeyStroke keyStroke = ControllerReadString.readUserName(screen);
+        if (keyStroke == null) return;
 
         // преобразовали в тип клавиши
         KeyType type = keyStroke.getKeyType();

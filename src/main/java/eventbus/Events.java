@@ -7,6 +7,9 @@ public class Events {
 
     public interface Event {}
 
+    // начало игровой сессии
+    public record StartNewSession() implements Event {}
+
     // событие передает команду управления
     public record KeyPressed(ControllerCommands value) implements Event {}
 
