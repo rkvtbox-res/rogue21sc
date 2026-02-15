@@ -5,7 +5,6 @@ import controller.Controller;
 import eventbus.EventBus;
 import eventbus.Events;
 import model.*;
-import model.gamestate.GameState;
 import presentation.Render;
 
 import java.io.IOException;

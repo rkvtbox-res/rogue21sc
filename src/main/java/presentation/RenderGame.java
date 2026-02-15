@@ -35,6 +35,7 @@ public class RenderGame {
         graphics.putString(gameState.getPlayerState().getPlayerPosX(), gameState.getPlayerState().getPlayerPosY(), rs.playerSymbol);
 
         // главное окно с картой
+        // TODO сюда добавляем отрисовку карты, монстров и прочее
         for (int y = rs.borderWindowFirstLine; y <= rs.borderWindowLastLine(); y++) {
             if (y == rs.borderWindowFirstLine) {
                 for (int x = 1; x < rs.getWindowWidth(); x++) {
@@ -55,6 +56,7 @@ public class RenderGame {
         }
 
         // окно лога
+        // TODO сюда дублируем текстом происходящее
         for (int y = rs.borderLogFirstLine(); y <= rs.borderLogLastLine(); y++) {
             if (y == rs.borderLogFirstLine()) {
                 for (int x = 1; x < rs.getWindowWidth(); x++) {

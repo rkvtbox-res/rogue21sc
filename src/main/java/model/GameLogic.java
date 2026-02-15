@@ -38,5 +38,9 @@ public class GameLogic {
         bus.post(new Events.RenderRefresh());
     }
 
+    private void generateNewGame() {
+
+    }
+
 
 }

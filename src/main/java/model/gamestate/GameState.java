@@ -8,19 +8,22 @@ public class GameState {
     private TreasureState treasureState;
     private Potions potions;
     private Weapons weapons;
+    private final long seed;
 
     public GameState() {
-        init();
+        initClass();
+        this.seed = System.currentTimeMillis();
+
     }
 
-    private void init() {
-        playerState = new PlayerState();
-        mapState = new MapState();
-        monstersState = new MonstersState();
-        treasureState = new TreasureState();
-        potions = new Potions();
-        weapons = new Weapons();
-        backpackState = new BackpackState();
+    private void initClass() {
+        this.playerState = new PlayerState();
+        this.mapState = new MapState();
+        this.monstersState = new MonstersState();
+        this.treasureState = new TreasureState();
+        this.potions = new Potions();
+        this.weapons = new Weapons();
+        this.backpackState = new BackpackState();
     }
 
 
@@ -50,5 +53,9 @@ public class GameState {
 
     public Weapons getWeapons () {
         return weapons;
+    }
+
+    public long getSeed() {
+        return seed;
     }
 }
