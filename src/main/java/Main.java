@@ -30,7 +30,9 @@ public class Main {
             ModelState modelState = new ModelState();
             MainMenuState mainMenuState = new MainMenuState(modelState);
             new ModelLogic(bus, modelState, mainMenuState);
+
             GameState gameState = new GameState();
+            new GameLogic(gameState, bus);
 
             // СЛОЙ ВВОДА
             Controller controller = new Controller(bus, screen, modelState);

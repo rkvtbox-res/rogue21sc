@@ -24,6 +24,9 @@ public class Events {
     // Начало новой игры
     public record StartNewGame() implements Event {};
 
+    // Пауза
+    public record Pause() implements Event {};
+
     // Сохранить игру
     public record SaveGame() implements Event {};
 

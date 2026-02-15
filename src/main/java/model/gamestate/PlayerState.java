@@ -14,7 +14,7 @@ public class PlayerState {
     // TODO добавить поле текущего оружия
 
     // конструктор
-    public void PlayerState() {
+    public PlayerState() {
     }
 
     //геттеры
@@ -27,15 +27,34 @@ public class PlayerState {
     }
     // TODO > добавить по силе и здоровью
 
+    public int getPlayerHealth() {
+        return playerHealth;
+    }
+
+    public int getPlayerHealthMax() {
+        return playerHealth;
+    }
+
+    public int getPlayerStrength() {
+        return playerStrength;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
 
     //сеттеры
     public void setPlayerPosX(int playerPosX) {
         this.playerPosX = playerPosX;
     }
-
     public void setPlayerPosY(int playerPosY) {
         this.playerPosY = playerPosY;
     }
 
+    // управление
+    public void playerMoveUp() {this.playerPosY--;}
+    public void playerMoveDown() {this.playerPosY++;}
+    public void playerMoveRight() {this.playerPosX++;}
+    public void playerMoveLeft() {this.playerPosY--;}
 
 }

@@ -48,6 +48,7 @@ public class Render {
             case ENTER_NAME -> RenderTitle.render(screen, renderState, modelState.getUserName());
             case MENU -> RenderMenu.render(screen, menuState, renderState, modelState.getUserName());
             case GAME -> RenderGame.render(screen, gameState, renderState, modelState.getUserName());
+            case GAME_PAUSE_MENU -> RenderPause.render(screen, menuState, gameState, renderState, modelState.getUserName());
             case QUIT -> {} // ничего не рисуем
         }
     }

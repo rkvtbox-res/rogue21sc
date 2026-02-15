@@ -22,6 +22,8 @@ public class RenderState {
     public final int welcomePromptLine = 2;
     public final int borderWindowFirstLine = 4;
 
+    //
+    public final String playerSymbol = "●";
 
 
     public RenderState(Screen screen) {

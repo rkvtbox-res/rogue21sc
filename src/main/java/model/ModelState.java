@@ -2,12 +2,13 @@ package model;
 
 public class ModelState {
 
-    // константы состояний игры
+    // константы состояний игры (глобальные состояния)
     public enum State {
         MENU,           // стартовое меню
         ENTER_NAME,     // режим ввода имени игрока
         GAME,           // игра
-        PAUSE_MENU,     // меню во время игры, игра на паузе
+        GAME_INVENTORY,
+        GAME_PAUSE_MENU,     // меню во время игры, игра на паузе
         QUIT }          // выход из игры
 
     private final StringBuilder userName = new StringBuilder();

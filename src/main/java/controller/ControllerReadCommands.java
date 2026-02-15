@@ -35,9 +35,12 @@ public class ControllerReadCommands {
             case 'a', 'A' -> ControllerCommands.MOVE_LEFT;
             case 'd', 'D' -> ControllerCommands.MOVE_RIGHT;
             case 'i', 'I' -> ControllerCommands.INVENTORY;
-            case 'e', 'E' -> ControllerCommands.ENTER;
+            case 'e', 'E' -> ControllerCommands.READ;
+            case 'h', 'H' -> ControllerCommands.WEAR_WEAPON;
+            case 'j', 'J' -> ControllerCommands.EAT;
+            case 'k', 'K' -> ControllerCommands.DRINK;
             case ' ' -> ControllerCommands.WAIT;
-            case 'q' -> ControllerCommands.QUIT;
+
             default -> ControllerCommands.NONE;
         };
 

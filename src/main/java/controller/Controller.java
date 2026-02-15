@@ -35,8 +35,13 @@ public class Controller {
     public void readKey() throws IOException {
         ControllerCommands key = ControllerReadCommands.readInput(screen);
         if (key == null || key == ControllerCommands.NONE) return;
+        if (modelState.getState() == ModelState.State.GAME && key == ControllerCommands.QUIT) {
+            bus.post(new Events.Pause());
+        } else {
 
-        bus.post(new Events.KeyPressed(key));
+
+            bus.post(new Events.KeyPressed(key));
+        }
     }
 
     public void readLine() throws IOException {

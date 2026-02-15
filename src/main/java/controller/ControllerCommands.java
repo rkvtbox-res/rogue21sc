@@ -9,6 +9,12 @@ public enum ControllerCommands {
     MOVE_LEFT,
     WAIT,
 
+    WEAR_WEAPON,
+    EAT,
+    DRINK,
+    READ,
+
+
     INVENTORY,
 
     ENTER,
