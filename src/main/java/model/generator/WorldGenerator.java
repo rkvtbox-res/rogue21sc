@@ -28,14 +28,14 @@ public class WorldGenerator {
     private final int roomMaxHeight = 25;
 
 
-    public WorldGenerator(GameState gameState) {
+    public WorldGenerator(GameState gameState, long seed) {
         this.gameState = gameState;
-        this.seed = new Random()
+        this.seed = seed;
     }
 
-
-
-    private roomGenerstor() {
-
+    /*private Level generateLevel (long seed) {
+        // создаем объект - заполняем комнатами(проверить что не пересекаются) соединить двери коридорами
     }
+*/
+
 }
