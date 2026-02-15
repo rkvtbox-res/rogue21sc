@@ -8,20 +8,27 @@ import model.gamestate.GameState;
 import java.util.Map;
 
 public class GameLogic {
-    private final GameState gameState;
     private final EventBus bus;
+    private GameState gameState;
 
 
-    public GameLogic (GameState gameState, EventBus bus) {
-        this.gameState = gameState;
+
+    public GameLogic(EventBus bus) {
         this.bus = bus;
-
+        initClass();
 
         bus.subscribe(Events.KeyPressed.class, e -> playerMove(e.value()));
     }
 
+    private void initClass() {
+        this.gameState = new GameState();
+    }
 
-    private void playerMove (ControllerCommands command) {
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    private void playerMove(ControllerCommands command) {
         switch (command) {
             case ControllerCommands.MOVE_UP -> gameState.getPlayerState().playerMoveUp();
             case ControllerCommands.MOVE_DOWN -> gameState.getPlayerState().playerMoveDown();

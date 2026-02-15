@@ -27,29 +27,23 @@ public class Main {
             EventBus bus = new EventBus();
 
             // СЛОЙ МОДЕЛИ
-            ModelState modelState = new ModelState();
-            MainMenuState mainMenuState = new MainMenuState(modelState);
-            new ModelLogic(bus, modelState, mainMenuState);
-
-            GameState gameState = new GameState();
-            new GameLogic(gameState, bus);
+            ModelLogic modelLogic = new ModelLogic(bus); // меню и состояния игры
+            GameLogic gameLogic = new GameLogic(bus);
 
             // СЛОЙ ВВОДА
-            Controller controller = new Controller(bus, screen, modelState);
+            Controller controller = new Controller(bus, screen, modelLogic.getModelState());
 
-            new Render(bus, screen, mainMenuState, modelState, gameState);
+            // СЛОЙ ВЫВОДА
+            new Render(bus, screen, modelLogic.getModelState(), gameLogic.getGameState());
             // Отрисовываем меню - можно заменить на заставку
             bus.post(new Events.RenderRefresh());
 
-
-            // СЛОЙ ВЫВОДА
-
-
             boolean running = true;
+
             while (running) {
                 controller.controller(); // контроллер читает ввод и постит события
 
-                if (modelState.getState() == ModelState.State.QUIT) {
+                if (modelLogic.getModelState().getState() == ModelState.State.QUIT) {
                     running = false;
                 }
 

@@ -3,17 +3,18 @@ package presentation;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
-import model.MainMenuState;
+import model.ModelState;
 import model.gamestate.GameState;
 
 import java.io.IOException;
 
 public class RenderPause {
-    public static void render(Screen screen, MainMenuState menu, GameState gameState, RenderState rs, String userName) throws IOException {
+    public static void render(Screen screen, GameState gameState, RenderState rs, ModelState modelState) throws IOException {
         screen.clear();
         TextGraphics graphics = screen.newTextGraphics();
 
-        String title = "Game paused";
+        String title = rs.getPromptPauseTitle();
+
         graphics.putString(rs.getWindowWidth() / 2 - title.length() / 2, rs.gameNameLine, title);
         // здоровье ловкость сила оружие
         graphics.putString(rs.getWindowWidth() / 2 - 10 - 5, rs.welcomePromptLine, "Agility");
@@ -52,9 +53,9 @@ public class RenderPause {
             }
         }
 
-        String[] items = menu.getMenuItems();
+        String[] items = modelState.getMenuItems();
         for (int i = 0; i < items.length; i++) {
-            boolean selected = i == menu.getSelectedMenu();
+            boolean selected = i == modelState.getSelectedMenu();
             if (selected) {
                 graphics.setForegroundColor(TextColor.ANSI.YELLOW);
                 graphics.putString(rs.getWindowWidth()/2 - 5, rs.borderWindowFirstLine + 3 + i, "> " + items[i]);

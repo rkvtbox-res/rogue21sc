@@ -6,15 +6,12 @@ import eventbus.Events;
 
 public class ModelLogic {
     private final EventBus bus;
-    private final ModelState modelState;
-    private final MainMenuState mainMenuState;
+    private ModelState modelState; // тут храним глобальное состояние игры
 
-
-    public ModelLogic(EventBus bus, ModelState modelState, MainMenuState mainMenuState) {
+    // Конструктор + подписываемся на события
+    public ModelLogic(EventBus bus) {
         this.bus = bus;
-        this.modelState = modelState;
-        this.mainMenuState = mainMenuState;
-
+        initClass();
 
         // читаем события нажатия клавиш - команды меню и игры
         bus.subscribe(Events.KeyPressed.class, e -> keyPressedNew(e.value()));
@@ -32,6 +29,16 @@ public class ModelLogic {
         bus.subscribe(Events.Pause.class, e -> gamePaused());
 
     }
+    // Инициализируем подклассы состояний
+    private void initClass() {
+        this.modelState = new ModelState();
+    }
+
+    // геттеры
+    public ModelState getModelState() {
+        return modelState;
+    }
+
 
     // основная логика управления
     private void keyPressedNew(ControllerCommands key) {
@@ -40,11 +47,11 @@ public class ModelLogic {
         if (modelState.getState() == ModelState.State.MENU || modelState.getState() == ModelState.State.GAME_PAUSE_MENU) {
             switch (key) {
                 case MOVE_UP -> {
-                    mainMenuState.menuMoveUp();
+                    modelState.menuMoveUp();
                     bus.post(new Events.RenderRefresh());
                 }
                 case MOVE_DOWN -> {
-                    mainMenuState.menuMoveDown();
+                    modelState.menuMoveDown();
                     bus.post(new Events.RenderRefresh());
                 }
                 case ENTER -> {
@@ -58,7 +65,7 @@ public class ModelLogic {
     // логика выбора меню - по выбору постим соответствующее событие
     private void menuSelection() {
         if (modelState.getState() == ModelState.State.MENU) {
-            switch (mainMenuState.getSelectedMenu()) {
+            switch (modelState.getSelectedMenu()) {
                 case 0 -> {
                     bus.post(new Events.StartNewGame());
                     modelState.setState(ModelState.State.GAME);
@@ -69,7 +76,7 @@ public class ModelLogic {
                 case 3 -> bus.post(new Events.QuitRequest());
             }
         } else if (modelState.getState() == ModelState.State.GAME_PAUSE_MENU) {
-            switch (mainMenuState.getSelectedMenu()) {
+            switch (modelState.getSelectedMenu()) {
                 case 0 -> {
                     modelState.setState(ModelState.State.GAME);
                     bus.post(new Events.RenderRefresh());
@@ -119,6 +126,8 @@ public class ModelLogic {
         modelState.setState(ModelState.State.GAME_PAUSE_MENU);
         bus.post(new Events.RenderRefresh());
     }
+
+
 
 
 }

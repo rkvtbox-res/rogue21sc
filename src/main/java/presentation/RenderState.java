@@ -8,6 +8,7 @@ public class RenderState {
     // базовая информация
     public final String gameName = "Rogue";
     public final String welcomePrompt = " welcome to adventure!";
+    public final String promptPauseTitle = "Game paused";
 
     // рамки
     public final String windowBorderStright = "═";
@@ -52,4 +53,9 @@ public class RenderState {
         return getWindowHeight()-1;
     }
 
+
+    // геттеры
+    public String getPromptPauseTitle() {
+        return promptPauseTitle;
+    }
 }
