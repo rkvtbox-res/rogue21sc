@@ -1,6 +1,6 @@
 package model.gamestate;
 
-public class Weapons {
+abstract class Weapons {
 
     public Weapons() {};
 }

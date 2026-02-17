@@ -1,5 +1,9 @@
 package model;
 
+import data.Leader;
+
+import java.util.List;
+
 public class ModelState {
     // ------------------------------------------------ константы состояний игры (глобальные состояния)
     public enum State {
@@ -18,6 +22,7 @@ public class ModelState {
     private final String[] menuItemsPaused = {"Resume Game", "New Game", "Hall of Fame", "Quit" };
     private int selectedMenu = 0; // индекс текущего меню
 
+
     public String[] getMenuItems() {
         if (state == ModelState.State.MENU) {
             return menuItemsNew;
@@ -25,6 +30,9 @@ public class ModelState {
             return menuItemsPaused;
         }
     }
+
+    // ---------------------------------------------- Таблица рекордов
+    private final List<Leader> leaderBoard;
 
     public int getSelectedMenu() {
         return selectedMenu;
@@ -58,6 +66,12 @@ public class ModelState {
         return userName.toString();
     }
 
+    public void setLeaderboard(List<Leader> leaderBoard) {
+        this.leaderBoard = leaderBoard;
+    }
 
+    public List<Leader> getLeaderBoard() {
+        return leaderBoard;
+    }
 }
 

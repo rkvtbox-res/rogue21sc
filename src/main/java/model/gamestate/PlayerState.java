@@ -13,6 +13,18 @@ public class PlayerState {
 
     // TODO добавить поле текущего оружия
 
+    // статистика по игроку
+    private int treasure = 0;
+    private int levelOfDungeon = 0;
+    private int countOfKills = 0;
+    private int countOfFood = 0;
+    private int countOfDrinks = 0;
+    private int countOfBooks = 0;
+    private int countOfMissedStrikes = 0;
+    private int countOfHit = 0;
+    private int countOfSteps = 0;
+
+
     // конструктор
     public PlayerState() {
     }

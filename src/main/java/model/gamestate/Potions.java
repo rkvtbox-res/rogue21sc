@@ -1,6 +1,6 @@
 package model.gamestate;
 
-public class Potions {
+abstract class Potions {
 
     public Potions() {}
 }

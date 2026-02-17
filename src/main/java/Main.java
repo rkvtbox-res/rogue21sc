@@ -37,6 +37,9 @@ public class Main {
             // Отрисовываем меню - можно заменить на заставку
             bus.post(new Events.RenderRefresh());
 
+            // СЛОЙ ДАННЫХ
+
+
             boolean running = true;
 
             while (running) {

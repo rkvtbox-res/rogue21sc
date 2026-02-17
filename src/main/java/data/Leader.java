@@ -1,0 +1,121 @@
+package data;
+
+public class Leader {
+    private String playerName;
+    private int treasure;
+    private int levelOfDungeon;
+    private int countOfKills;
+    private int countOfFood;
+    private int countOfDrinks;
+    private int countOfBooks;
+    private int countOfMissedStrikes;
+    private int countOfHit;
+    private int countOfSteps;
+    private boolean currentAttempt;
+
+    public Leader(String playerName) {
+        this.playerName = playerName;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("" +
+                        "{\"name\": \"%s\"," +
+                        " \"treasure\": %d," +
+                        " \"levelOfDungeon\": %d," +
+                        " \"countOfKills\": %d," +
+                        " \"countOfFood\": %d," +
+                        " \"countOfDrinks\": %d," +
+                        " \"countOfBooks\": %d," +
+                        " \"countOfMissedStrikes\": %d," +
+                        " \"countOfHit\": %d," +
+                        " \"countOfSteps\": %d}",
+                playerName, treasure, levelOfDungeon, countOfKills, countOfFood, countOfDrinks,
+                countOfBooks, countOfMissedStrikes, countOfHit, countOfSteps);
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+    public String getPlayerName() {
+        return playerName;
+    }
+    public void setTreasure(int treasure) {
+        this.treasure = treasure;
+    }
+    public int getTreasure() {
+        return treasure;
+    }
+
+    public int getLevelOfDungeon() {
+        return levelOfDungeon;
+    }
+
+    public void setLevelOfDungeon(int levelOfDungeon) {
+        this.levelOfDungeon = levelOfDungeon;
+    }
+
+    public int getCountOfKills() {
+        return countOfKills;
+    }
+
+    public void setCountOfKills(int countOfKills) {
+        this.countOfKills = countOfKills;
+    }
+
+    public int getCountOfFood() {
+        return countOfFood;
+    }
+
+    public void setCountOfFood(int countOfFood) {
+        this.countOfFood = countOfFood;
+    }
+
+    public int getCountOfDrinks() {
+        return countOfDrinks;
+    }
+
+    public void setCountOfDrinks(int countOfDrinks) {
+        this.countOfDrinks = countOfDrinks;
+    }
+
+    public int getCountOfBooks() {
+        return countOfBooks;
+    }
+
+    public void setCountOfBooks(int countOfBooks) {
+        this.countOfBooks = countOfBooks;
+    }
+
+    public int getCountOfMissedStrikes() {
+        return countOfMissedStrikes;
+    }
+
+    public void setCountOfMissedStrikes(int countOfMissedStrikes) {
+        this.countOfMissedStrikes = countOfMissedStrikes;
+    }
+
+    public int getCountOfHit() {
+        return countOfHit;
+    }
+
+    public void setCountOfHit(int countOfHit) {
+        this.countOfHit = countOfHit;
+    }
+
+    public int getCountOfSteps() {
+        return countOfSteps;
+    }
+
+    public void setCountOfSteps(int countOfSteps) {
+        this.countOfSteps = countOfSteps;
+    }
+
+    public boolean isCurrentAttempt() {
+        return currentAttempt;
+    }
+
+    public void setCurrentAttempt(boolean currentAttempt) {
+        this.currentAttempt = currentAttempt;
+    }
+}
