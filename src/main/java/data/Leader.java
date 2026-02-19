@@ -33,18 +33,21 @@ public class Leader {
     @Override
     public String toString() {
         return String.format("" +
-                        "{\"name\": \"%s\"," +
-                        " \"treasure\": %d," +
-                        " \"levelOfDungeon\": %d," +
-                        " \"countOfKills\": %d," +
-                        " \"countOfFood\": %d," +
-                        " \"countOfDrinks\": %d," +
-                        " \"countOfBooks\": %d," +
-                        " \"countOfMissedStrikes\": %d," +
-                        " \"countOfHit\": %d," +
-                        " \"countOfSteps\": %d}",
+                        "  {\n" +
+                        "    \"playerName\": \"%s\",\n" +
+                        "    \"treasure\": %d,\n" +
+                        "    \"levelOfDungeon\": %d,\n" +
+                        "    \"countOfKills\": %d,\n" +
+                        "    \"countOfFood\": %d,\n" +
+                        "    \"countOfDrinks\": %d,\n" +
+                        "    \"countOfBooks\": %d,\n" +
+                        "    \"countOfMissedStrikes\": %d,\n" +
+                        "    \"countOfHit\": %d,\n" +
+                        "    \"countOfSteps\": %d,\n" +
+                        "    \"currentAttempt\": %b\n" +
+                        "  }",
                 playerName, treasure, levelOfDungeon, countOfKills, countOfFood, countOfDrinks,
-                countOfBooks, countOfMissedStrikes, countOfHit, countOfSteps);
+                countOfBooks, countOfMissedStrikes, countOfHit, countOfSteps, currentAttempt);
     }
 
     public void setPlayerName(String playerName) {

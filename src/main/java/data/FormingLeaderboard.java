@@ -104,4 +104,28 @@ public final class FormingLeaderboard {
 
         return leaderBoard;
     }
+
+
+    public static void saveLeaderBoard(List<Leader> leaderboard) throws IOException {
+
+        // оставить максимум 10 (список уже отсортирован)
+        int limit = Math.min(10, leaderboard.size());
+        List<Leader> top10 = leaderboard.subList(0, limit);
+
+        StringBuilder json = new StringBuilder();
+        json.append("[\n");
+
+        for (int i = 0; i < top10.size(); i++) {
+            json.append(top10.get(i).toString());
+
+            if (i < top10.size() - 1) {
+                json.append(",");
+            }
+            json.append("\n");
+        }
+
+        json.append("]");
+
+        Files.writeString(Path.of(FILE_PATH), json.toString());
+    }
 }

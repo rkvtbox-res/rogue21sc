@@ -40,23 +40,36 @@ public class RenderHallOfFame {
                 graphics.putString(rs.getWindowWidth() - 1, y, "║");
             }
         }
+
+        //TODO добавить поля в таблицу лидеров
+
         String leaderTitle = String.format(
                 "%-20s %-10s",
                 "Player",
                 "Treasure"
         );
-        graphics.putString( 5,rs.borderWindowFirstLine + 1,  leaderTitle);
+        graphics.putString( 10,rs.borderWindowFirstLine + 5,  leaderTitle);
 
         // Выводим лидеров
         for (int i = 0; i < leaderBoard.size(); i++) {
-            String leader = String.format(
-                    "%-20s %-10d",
-                    leaderBoard.get(i).getPlayerName(),
-                    leaderBoard.get(i).getTreasure()
-                    );
-            graphics.putString(5,rs.borderWindowFirstLine + 3 + i, leader);
+            if (leaderBoard.get(i).isCurrentAttempt()) { // Пропускаем пустые строки (если есть)
+                String currentAtt = "✪ ";
+                String leader = String.format(
+                        "%s %-20s %-10d",
+                        currentAtt,
+                        leaderBoard.get(i).getPlayerName(),
+                        leaderBoard.get(i).getTreasure()
+                );
+                graphics.putString(7, rs.borderWindowFirstLine + 7 + i, leader);
+            } else {
+                String leader = String.format(
+                        "%-20s %-10d",
+                        leaderBoard.get(i).getPlayerName(),
+                        leaderBoard.get(i).getTreasure()
+                );
+                graphics.putString(10, rs.borderWindowFirstLine + 7 + i, leader);
+            }
         }
-
 
 
 

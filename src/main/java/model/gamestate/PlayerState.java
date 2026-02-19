@@ -13,9 +13,7 @@ public class PlayerState {
 
     // TODO добавить поле текущего оружия
 
-    // статистика по игроку
     private int treasure = 0;
-    private int levelOfDungeon = 0;
     private int countOfKills = 0;
     private int countOfFood = 0;
     private int countOfDrinks = 0;
@@ -37,7 +35,6 @@ public class PlayerState {
     public int getPlayerPosY() {
         return playerPosY;
     }
-    // TODO > добавить по силе и здоровью
 
     public int getPlayerHealth() {
         return playerHealth;
@@ -55,18 +52,63 @@ public class PlayerState {
         return agility;
     }
 
+    public int getTreasure() {
+        return treasure;
+    }
+
+    public int getCountOfKills() {
+        return countOfKills;
+    }
+
+    public int getCountOfFood() {
+        return countOfFood;
+    }
+
+    public int getCountOfDrinks() {
+        return countOfDrinks;
+    }
+
+    public int getCountOfBooks() {
+        return countOfBooks;
+    }
+
+    public int getCountOfMissedStrikes() {
+        return countOfMissedStrikes;
+    }
+
+    public int getCountOfHit() {
+        return countOfHit;
+    }
+
+    public int getCountOfSteps() {
+        return countOfSteps;
+    }
+
+
     //сеттеры
     public void setPlayerPosX(int playerPosX) {
         this.playerPosX = playerPosX;
     }
+
     public void setPlayerPosY(int playerPosY) {
         this.playerPosY = playerPosY;
     }
 
     // управление
-    public void playerMoveUp() {this.playerPosY--;}
-    public void playerMoveDown() {this.playerPosY++;}
-    public void playerMoveRight() {this.playerPosX++;}
-    public void playerMoveLeft() {this.playerPosY--;}
+    public void playerMoveUp() {
+        this.playerPosY--;
+    }
+
+    public void playerMoveDown() {
+        this.playerPosY++;
+    }
+
+    public void playerMoveRight() {
+        this.playerPosX++;
+    }
+
+    public void playerMoveLeft() {
+        this.playerPosY--;
+    }
 
 }
