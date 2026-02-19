@@ -10,6 +10,7 @@ public class ModelState {
         MENU,           // стартовое меню
         ENTER_NAME,     // режим ввода имени игрока
         GAME,           // игра
+        HALL_OF_FAME,   // таблица рекордов
         GAME_INVENTORY,
         GAME_PAUSE_MENU,     // меню во время игры, игра на паузе
         QUIT }          // выход из игры
@@ -17,14 +18,14 @@ public class ModelState {
     private final StringBuilder userName = new StringBuilder();
     private final String gameTitle = "RogueGame 21Sc Project";
 
-    // ------------------------------------------------ работа с меню
+    // ------------------------------------------------ работа с меню - разный набор в зависимости от состояния
     private final String[] menuItemsNew = {"New Game", "Load game", "Hall of Fame", "Quit"};
     private final String[] menuItemsPaused = {"Resume Game", "New Game", "Hall of Fame", "Quit" };
     private int selectedMenu = 0; // индекс текущего меню
 
-
     public String[] getMenuItems() {
         if (state == ModelState.State.MENU) {
+
             return menuItemsNew;
         } else {
             return menuItemsPaused;
@@ -32,8 +33,9 @@ public class ModelState {
     }
 
     // ---------------------------------------------- Таблица рекордов
-    private final List<Leader> leaderBoard;
+    private List<Leader> leaderBoard;
 
+    // гетеры
     public int getSelectedMenu() {
         return selectedMenu;
     }
@@ -46,7 +48,7 @@ public class ModelState {
         selectedMenu = (selectedMenu + 1 + menuItemsNew.length) % menuItemsNew.length;
     }
 
-    // ------------------------------------------------ текущее состояние игры
+    // ------------------------------------------------ состояние игры (стартовое - ввод имени)
     private State state = State.ENTER_NAME;
 
     public State getState() { return state; }

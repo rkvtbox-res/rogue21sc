@@ -8,6 +8,7 @@ public class ModelLogic {
     private final EventBus bus;
     private ModelState modelState; // тут храним глобальное состояние игры
 
+
     // Конструктор + подписываемся на события
     public ModelLogic(EventBus bus) {
         this.bus = bus;
@@ -58,6 +59,11 @@ public class ModelLogic {
                     menuSelection();
                 }
             }
+        } else if (modelState.getState() == ModelState.State.HALL_OF_FAME) {
+            if (key == ControllerCommands.ENTER) {
+                modelState.setState(ModelState.State.MENU);
+                bus.post(new Events.RenderRefresh());
+            }
         }
     }
 
@@ -72,7 +78,10 @@ public class ModelLogic {
                     bus.post(new Events.RenderRefresh());
                 }
                 case 1 -> bus.post(new Events.LoadGame());
-                case 2 -> bus.post(new Events.RenderRefresh());
+                case 2 -> {
+                    modelState.setState(ModelState.State.HALL_OF_FAME);
+                    bus.post(new Events.ShowHallOfFame());
+                }
                 case 3 -> bus.post(new Events.QuitRequest());
             }
         } else if (modelState.getState() == ModelState.State.GAME_PAUSE_MENU) {

@@ -13,8 +13,21 @@ public class Leader {
     private int countOfSteps;
     private boolean currentAttempt;
 
-    public Leader(String playerName) {
+    public Leader(String playerName, int treasure, int levelOfDungeon, int countOfKills, int countOfFood,
+                  int countOfDrinks, int countOfBooks, int countOfMissedStrikes, int countOfHit, int countOfSteps,
+                  boolean currentAttempt) {
         this.playerName = playerName;
+        this.treasure = treasure;
+        this.levelOfDungeon = levelOfDungeon;
+        this.countOfKills = countOfKills;
+        this.countOfFood = countOfFood;
+        this.countOfDrinks = countOfDrinks;
+        this.countOfBooks = countOfBooks;
+        this.countOfMissedStrikes = countOfMissedStrikes;
+        this.countOfHit = countOfHit;
+        this.countOfSteps = countOfSteps;
+        this.currentAttempt = currentAttempt;
+
     }
 
     @Override

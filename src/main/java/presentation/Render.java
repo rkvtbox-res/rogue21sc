@@ -16,7 +16,7 @@ public class Render {
     private final GameState gameState;
     private final RenderState renderState;
 
-    public Render(EventBus bus, Screen screen, ModelState modelState, GameState gameState) {
+    public Render(EventBus bus, Screen screen, ModelState modelState, GameState gameState) throws IOException {
         this.bus = bus;
         this.screen = screen;
         this.modelState = modelState;
@@ -30,7 +30,8 @@ public class Render {
                 throw new RuntimeException(ex);
             }
         });
-    }
+
+            }
 
     public void render() throws IOException {
         switch (modelState.getState()) {
@@ -38,6 +39,9 @@ public class Render {
             case MENU -> RenderMenu.render(screen, renderState, modelState);
             case GAME -> RenderGame.render(screen, gameState, renderState, modelState.getUserName());
             case GAME_PAUSE_MENU -> RenderPause.render(screen, gameState, renderState, modelState);
+            case HALL_OF_FAME -> RenderHallOfFame.render(screen, renderState);
         }
     }
+
+
 }

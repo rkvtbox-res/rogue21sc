@@ -10,16 +10,15 @@ import java.util.Scanner;
 
 public class FormingLeaderboard {
 
-    //  читаем из файла, пишем в список лидеров - каждый элемент объект
-    // читаем из списка, пишем в файл (перед этим добавляем новый элемент, сортируем
-    // вывод показываем последние 10 лидеров
-    // количество сокровищ, достигнутый уровень, количество побежденных противников, количество съеденной еды, количество выпитых эликсиров, количество прочитанных свитков, количество нанесенных и пропущенных ударов, количество пройденных клеток.
-
-    // нужен класс проверяющий существование файла с таблицей - если нет создаем новый
     private final List<Leader> leaderBoard = new ArrayList<>();
 
     private final String filePathOfLeaderboard = "./";
     private final String fileNameOfLeaderboard = "leaderboard.json";
+
+    public List<Leader> getLeaderBoard() throws IOException {
+        fileRead();
+        return leaderBoard;
+    }
 
     private void fileRead() throws IOException {
 
@@ -39,18 +38,35 @@ public class FormingLeaderboard {
 
 
         // убираем [], пробелы и переносы строки
-        firstToString = firstToString.substring(1, firstToString.length()-1);
+        firstToString = firstToString.substring(1, firstToString.length() - 1);
         firstToString = firstToString.replaceAll("\\s+", "");
 
-    // разделяем на элементы
+        // разделяем на элементы
         String[] secondToArray = firstToString.split("\\},\\{");
 
-        for (int i= 0; i < secondToArray.length; i++) {
+        // очищаем старые данные, чтобы не было дубликатов
+        leaderBoard.clear();
+
+
+        for (int i = 0; i < secondToArray.length; i++) {
             // работаем с одним элементом
             // убираем кавычки и брейсы
             secondToArray[i] = secondToArray[i].replaceAll("\\{", "").replaceAll("\\}", "").replaceAll("\"", "");
 
             String[] thirdToElements = secondToArray[i].split("\\,");
+
+
+            String playerName = "Unknown";
+            int treasure = 0;
+            int levelOfDungeon = 0;
+            int countOfKills = 0;
+            int countOfFood = 0;
+            int countOfDrinks = 0;
+            int countOfBooks = 0;
+            int countOfMissedStrikes = 0;
+            int countOfHit = 0;
+            int countOfSteps = 0;
+            boolean currentAttempt = false;
 
             for (int j = 0; j < thirdToElements.length; j++) {
                 // работаем с одной записью
@@ -58,17 +74,44 @@ public class FormingLeaderboard {
                 String key = thirdToElements[j].substring(0, idx);
                 String value = thirdToElements[j].substring(idx + 1);
 
+                switch (key) {
+                    case "playerName" -> playerName = value;
+                    case "treasure" -> treasure = Integer.parseInt(value);
+                    case "levelOfDungeon" -> levelOfDungeon = Integer.parseInt(value);
+                    case "countOfKills" -> countOfKills = Integer.parseInt(value);
+                    case "countOfFood" -> countOfFood = Integer.parseInt(value);
+                    case "countOfDrinks" -> countOfDrinks = Integer.parseInt(value);
+                    case "countOfBooks" -> countOfBooks = Integer.parseInt(value);
+                    case "countOfMissedStrikes" -> countOfMissedStrikes = Integer.parseInt(value);
+                    case "countOfHit" -> countOfHit = Integer.parseInt(value);
+                    case "countOfSteps" -> countOfSteps = Integer.parseInt(value);
+                    case "currentAttempt" -> currentAttempt = Boolean.parseBoolean(value);
+                }
+
+
             }
+
+            Leader leader = new Leader(
+                    playerName,
+                    treasure,
+                    levelOfDungeon,
+                    countOfKills,
+                    countOfFood,
+                    countOfDrinks,
+                    countOfBooks,
+                    countOfMissedStrikes,
+                    countOfHit,
+                    countOfSteps,
+                    currentAttempt
+            );
+
+            leaderBoard.add(leader);
+
 
 
         }
 
-
-
-
     }
-
-
 
 
 }
