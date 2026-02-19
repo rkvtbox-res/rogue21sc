@@ -39,7 +39,7 @@ public class Render {
             case MENU -> RenderMenu.render(screen, renderState, modelState);
             case GAME -> RenderGame.render(screen, gameState, renderState, modelState.getUserName());
             case GAME_PAUSE_MENU -> RenderPause.render(screen, gameState, renderState, modelState);
-            case HALL_OF_FAME -> RenderHallOfFame.render(screen, renderState);
+            case HALL_OF_FAME -> RenderHallOfFame.render(screen, renderState, modelState);
         }
     }
 

@@ -1,8 +1,11 @@
 package model;
 
 import controller.ControllerCommands;
+import data.FormingLeaderboard;
 import eventbus.EventBus;
 import eventbus.Events;
+
+import java.io.IOException;
 
 public class ModelLogic {
     private final EventBus bus;
@@ -79,8 +82,7 @@ public class ModelLogic {
                 }
                 case 1 -> bus.post(new Events.LoadGame());
                 case 2 -> {
-                    modelState.setState(ModelState.State.HALL_OF_FAME);
-                    bus.post(new Events.ShowHallOfFame());
+                    loadLeaderBoard();
                 }
                 case 3 -> bus.post(new Events.QuitRequest());
             }
@@ -136,7 +138,18 @@ public class ModelLogic {
         bus.post(new Events.RenderRefresh());
     }
 
-
+    private void loadLeaderBoard() {
+        try {
+            modelState.setLeaderboard(FormingLeaderboard.getLeaderBoard());
+            modelState.setState(ModelState.State.HALL_OF_FAME);
+            bus.post(new Events.RenderRefresh());
+        } catch (IOException e) {
+            // мягко: вернуть в меню + можно сохранить сообщение в state
+            modelState.setState(ModelState.State.MENU);
+            // modelState.setLastError("Cannot read leaderboard");
+            bus.post(new Events.RenderRefresh());
+        }
+    }
 
 
 }

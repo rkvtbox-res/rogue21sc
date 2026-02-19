@@ -6,55 +6,51 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class FormingLeaderboard {
+public final class FormingLeaderboard {
 
-    private final List<Leader> leaderBoard = new ArrayList<>();
+    private static final String FILE_PATH = "./leaderboard.json";
 
-    private final String filePathOfLeaderboard = "./";
-    private final String fileNameOfLeaderboard = "leaderboard.json";
+    private FormingLeaderboard() {} // запрещаем создание объекта
 
-    public List<Leader> getLeaderBoard() throws IOException {
-        fileRead();
-        return leaderBoard;
+    public static List<Leader> getLeaderBoard() throws IOException {
+        return fileRead();
     }
 
-    private void fileRead() throws IOException {
+    private static List<Leader> fileRead() throws IOException {
 
-        File fileIn = new File(filePathOfLeaderboard + fileNameOfLeaderboard);
+        Path path = Path.of(FILE_PATH);
+        File fileIn = path.toFile();
 
-        // если файла нет, создаем
+        // если файла нет — создаём пустой массив
         if (!fileIn.exists()) {
-            Files.writeString(Path.of(filePathOfLeaderboard + fileNameOfLeaderboard), "[]");
+            Files.writeString(path, "[]");
         }
 
-        // читаем весь файл в одну строку
-        String firstToString = Files.readString(Path.of(filePathOfLeaderboard + fileNameOfLeaderboard)).trim();
-        if (firstToString.isEmpty() || firstToString.equals("[]")) {
-            leaderBoard.clear();
-            return;
+        String json = Files.readString(path).trim();
+        List<Leader> leaderBoard = new ArrayList<>();
+
+        if (json.isEmpty() || json.equals("[]")) {
+            return leaderBoard;
         }
 
+        // убираем []
+        json = json.substring(1, json.length() - 1);
 
-        // убираем [], пробелы и переносы строки
-        firstToString = firstToString.substring(1, firstToString.length() - 1);
-        firstToString = firstToString.replaceAll("\\s+", "");
+        // убираем пробелы и переносы
+        json = json.replaceAll("\\s+", "");
 
-        // разделяем на элементы
-        String[] secondToArray = firstToString.split("\\},\\{");
+        // делим на объекты
+        String[] objects = json.split("\\},\\{");
 
-        // очищаем старые данные, чтобы не было дубликатов
-        leaderBoard.clear();
+        for (String object : objects) {
 
+            object = object
+                    .replace("{", "")
+                    .replace("}", "")
+                    .replace("\"", "");
 
-        for (int i = 0; i < secondToArray.length; i++) {
-            // работаем с одним элементом
-            // убираем кавычки и брейсы
-            secondToArray[i] = secondToArray[i].replaceAll("\\{", "").replaceAll("\\}", "").replaceAll("\"", "");
-
-            String[] thirdToElements = secondToArray[i].split("\\,");
-
+            String[] fields = object.split(",");
 
             String playerName = "Unknown";
             int treasure = 0;
@@ -68,11 +64,13 @@ public class FormingLeaderboard {
             int countOfSteps = 0;
             boolean currentAttempt = false;
 
-            for (int j = 0; j < thirdToElements.length; j++) {
-                // работаем с одной записью
-                int idx = thirdToElements[j].indexOf(":");
-                String key = thirdToElements[j].substring(0, idx);
-                String value = thirdToElements[j].substring(idx + 1);
+            for (String field : fields) {
+
+                int idx = field.indexOf(":");
+                if (idx == -1) continue;
+
+                String key = field.substring(0, idx);
+                String value = field.substring(idx + 1);
 
                 switch (key) {
                     case "playerName" -> playerName = value;
@@ -87,11 +85,9 @@ public class FormingLeaderboard {
                     case "countOfSteps" -> countOfSteps = Integer.parseInt(value);
                     case "currentAttempt" -> currentAttempt = Boolean.parseBoolean(value);
                 }
-
-
             }
 
-            Leader leader = new Leader(
+            leaderBoard.add(new Leader(
                     playerName,
                     treasure,
                     levelOfDungeon,
@@ -103,15 +99,9 @@ public class FormingLeaderboard {
                     countOfHit,
                     countOfSteps,
                     currentAttempt
-            );
-
-            leaderBoard.add(leader);
-
-
-
+            ));
         }
 
+        return leaderBoard;
     }
-
-
 }

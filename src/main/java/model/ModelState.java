@@ -15,8 +15,9 @@ public class ModelState {
         GAME_PAUSE_MENU,     // меню во время игры, игра на паузе
         QUIT }          // выход из игры
 
+    // Тут собираем имя пользователя
     private final StringBuilder userName = new StringBuilder();
-    private final String gameTitle = "RogueGame 21Sc Project";
+
 
     // ------------------------------------------------ работа с меню - разный набор в зависимости от состояния
     private final String[] menuItemsNew = {"New Game", "Load game", "Hall of Fame", "Quit"};

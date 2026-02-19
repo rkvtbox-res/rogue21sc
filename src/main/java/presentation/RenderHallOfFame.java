@@ -3,21 +3,25 @@ package presentation;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
+import data.Leader;
 import model.ModelState;
 
 import java.io.IOException;
+import java.util.List;
 
 public class RenderHallOfFame {
-    public static void render(Screen screen, RenderState rs) throws IOException {
+    public static void render(Screen screen, RenderState rs, ModelState modelState) throws IOException {
         screen.clear();
         TextGraphics graphics = screen.newTextGraphics();
 
-        graphics.putString(rs.getWindowWidth()/2 - rs.gameName.length()/2, rs.gameNameLine, rs.gameName);
         String welcomePrompt = "Hall of Fame";
-        graphics.putString(rs.getWindowWidth()/2 - welcomePrompt.length()/2, rs.welcomePromptLine, welcomePrompt);
+        List<Leader> leaderBoard = modelState.getLeaderBoard();
 
 
+        graphics.putString(rs.getWindowWidth() / 2 - rs.gameName.length() / 2, rs.gameNameLine, rs.gameName);
+        graphics.putString(rs.getWindowWidth() / 2 - welcomePrompt.length() / 2, rs.welcomePromptLine, welcomePrompt);
 
+        // Рисуем рамку
         for (int y = rs.borderWindowFirstLine; y <= rs.borderWindowLastLine(); y++) {
             if (y == rs.borderWindowFirstLine) {
                 for (int x = 1; x < rs.getWindowWidth(); x++) {
@@ -36,6 +40,24 @@ public class RenderHallOfFame {
                 graphics.putString(rs.getWindowWidth() - 1, y, "║");
             }
         }
+        String leaderTitle = String.format(
+                "%-20s %-10s",
+                "Player",
+                "Treasure"
+        );
+        graphics.putString( 5,rs.borderWindowFirstLine + 1,  leaderTitle);
+
+        // Выводим лидеров
+        for (int i = 0; i < leaderBoard.size(); i++) {
+            String leader = String.format(
+                    "%-20s %-10d",
+                    leaderBoard.get(i).getPlayerName(),
+                    leaderBoard.get(i).getTreasure()
+                    );
+            graphics.putString(5,rs.borderWindowFirstLine + 3 + i, leader);
+        }
+
+
 
 
 
