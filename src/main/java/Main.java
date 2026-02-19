@@ -1,36 +1,57 @@
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
-import controller.ControlKeys;
-import controller.KeyboardController;
-import debug.DebugKeyLogger;
+import controller.Controller;
 import eventbus.EventBus;
 import eventbus.Events;
-import jcurses.system.Toolkit;
+import model.*;
+import presentation.Render;
 
-import controller.InputCommands;
-import presentation.Present;
+import java.io.IOException;
+
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        //инит курсов
-        Toolkit.init();
+        //инит лантерны под текущий терминал и создает буфер Screen
+        Screen screen = new DefaultTerminalFactory().createScreen();
+
+        // инит буфера
+        screen.startScreen();
+        screen.setCursorPosition(null);
+
 
         try {
-            // создаем шину
+            // СЛОЙ ШИНЫ
             EventBus bus = new EventBus();
 
-            // создаем контроллер клавиатуры
-            KeyboardController controller = new KeyboardController(bus);
+            // СЛОЙ МОДЕЛИ
+            ModelLogic modelLogic = new ModelLogic(bus); // меню и состояния игры
+            GameLogic gameLogic = new GameLogic(bus);
 
-            new DebugKeyLogger(bus);
+            // СЛОЙ ВВОДА
+            Controller controller = new Controller(bus, screen, modelLogic.getModelState());
+
+            // СЛОЙ ВЫВОДА
+            new Render(bus, screen, modelLogic.getModelState(), gameLogic.getGameState());
+            // Отрисовываем меню - можно заменить на заставку
+            bus.post(new Events.RenderRefresh());
 
             boolean running = true;
 
             while (running) {
-                controller.readKey(); // контроллер читает ввод и постит событи
+                controller.controller(); // контроллер читает ввод и постит события
+
+                if (modelLogic.getModelState().getState() == ModelState.State.QUIT) {
+                    running = false;
+                }
+
+                Thread.sleep(10);
             }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         } finally {
-            Toolkit.shutdown();
+            screen.stopScreen();
 
         }
 
