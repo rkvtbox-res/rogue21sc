@@ -18,13 +18,18 @@ public class RenderState {
     public final String windowBorderCornerDownRight = "╝";
     public final String windowBorder = "║";
 
+    // игорок
+    public final String playerSymbol = "✪";
+
     //Позиция меню
     public final int gameNameLine = 1;
     public final int welcomePromptLine = 2;
     public final int borderWindowFirstLine = 4;
 
-    //
-    public final String playerSymbol = "●";
+    int mapStartX = 2;
+
+    int  mapStartY = borderWindowFirstLine + 1;
+
 
 
     public RenderState(Screen screen) {

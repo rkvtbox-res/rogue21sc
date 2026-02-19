@@ -4,6 +4,7 @@ public enum Cell {
     WALL,
     FLOOR,
     DOOR,
-    DOOR_NEXT_LEVEL,
-    CORRIDOR;
+    CORRIDOR,
+    STAIR_NEXT_LEVEL,
+    EMPTY;
 }

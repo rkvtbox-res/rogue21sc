@@ -1,5 +1,7 @@
 package model.gamestate;
 
+import java.util.Random;
+
 public class GameState {
     private PlayerState playerState;
     private MapState mapState;
@@ -9,16 +11,17 @@ public class GameState {
     private Potions potions;
     private Weapons weapons;
     private final long seed;
+    private final Random random;
 
     public GameState() {
-        initClass();
         this.seed = System.currentTimeMillis();
-
+        this.random = new Random(seed);
+        initClass();
     }
 
     private void initClass() {
         this.playerState = new PlayerState();
-        this.mapState = new MapState();
+        this.mapState = new MapState(random);
         this.monstersState = new MonstersState();
         this.treasureState = new TreasureState();
         this.potions = new Potions();
@@ -57,5 +60,8 @@ public class GameState {
 
     public long getSeed() {
         return seed;
+    }
+    public Random getRandom() {
+        return random;
     }
 }

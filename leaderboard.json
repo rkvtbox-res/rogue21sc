@@ -115,5 +115,18 @@
     "countOfHit": 0,
     "countOfSteps": 0,
     "currentAttempt": false
+  },
+  {
+    "playerName": "Player3",
+    "treasure": 0,
+    "levelOfDungeon": 0,
+    "countOfKills": 0,
+    "countOfFood": 0,
+    "countOfDrinks": 0,
+    "countOfBooks": 0,
+    "countOfMissedStrikes": 0,
+    "countOfHit": 0,
+    "countOfSteps": 0,
+    "currentAttempt": false
   }
 ]

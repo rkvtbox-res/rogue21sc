@@ -108,7 +108,7 @@ public class PlayerState {
     }
 
     public void playerMoveLeft() {
-        this.playerPosY--;
+        this.playerPosX--;
     }
 
 }
