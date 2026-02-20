@@ -24,6 +24,9 @@ public class Events {
     // Начало новой игры
     public record StartNewGame() implements Event {};
 
+    // вывод таблицы рекордов
+    public record ShowHallOfFame() implements Event {}
+
     // Пауза
     public record Pause() implements Event {};
 
@@ -33,8 +36,7 @@ public class Events {
     // Загрузить игру
     public record LoadGame() implements Event {};
 
-    // таблица рекордов
-    public record HallOfFame() implements Event {};
+
 
     // выход
     public record QuitRequest() implements Event {};

@@ -26,8 +26,9 @@ public class Main {
             EventBus bus = new EventBus();
 
             // СЛОЙ МОДЕЛИ
-            ModelLogic modelLogic = new ModelLogic(bus); // меню и состояния игры
             GameLogic gameLogic = new GameLogic(bus);
+            ModelLogic modelLogic = new ModelLogic(bus, gameLogic.getGameState()); // меню и состояния игры
+
 
             // СЛОЙ ВВОДА
             Controller controller = new Controller(bus, screen, modelLogic.getModelState());
@@ -36,6 +37,9 @@ public class Main {
             new Render(bus, screen, modelLogic.getModelState(), gameLogic.getGameState());
             // Отрисовываем меню - можно заменить на заставку
             bus.post(new Events.RenderRefresh());
+
+            // СЛОЙ ДАННЫХ
+
 
             boolean running = true;
 

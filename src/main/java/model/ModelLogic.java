@@ -1,16 +1,25 @@
 package model;
 
 import controller.ControllerCommands;
+import Data.FormingLeaderboard;
+import data.Leader;
 import eventbus.EventBus;
 import eventbus.Events;
+import model.gamestate.GameState;
+
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 
 public class ModelLogic {
     private final EventBus bus;
     private ModelState modelState; // тут храним глобальное состояние игры
+    private GameState gameState;
 
     // Конструктор + подписываемся на события
-    public ModelLogic(EventBus bus) {
+    public ModelLogic(EventBus bus, GameState gameState) {
         this.bus = bus;
+        this.gameState = gameState;
         initClass();
 
         // читаем события нажатия клавиш - команды меню и игры
@@ -32,6 +41,7 @@ public class ModelLogic {
     // Инициализируем подклассы состояний
     private void initClass() {
         this.modelState = new ModelState();
+
     }
 
     // геттеры
@@ -58,6 +68,11 @@ public class ModelLogic {
                     menuSelection();
                 }
             }
+        } else if (modelState.getState() == ModelState.State.HALL_OF_FAME) {
+            if (key == ControllerCommands.ENTER) {
+                modelState.setState(ModelState.State.MENU);
+                bus.post(new Events.RenderRefresh());
+            }
         }
     }
 
@@ -72,8 +87,14 @@ public class ModelLogic {
                     bus.post(new Events.RenderRefresh());
                 }
                 case 1 -> bus.post(new Events.LoadGame());
-                case 2 -> bus.post(new Events.RenderRefresh());
-                case 3 -> bus.post(new Events.QuitRequest());
+                case 2 -> {
+                    loadLeaderBoard();
+
+                }
+                case 3 -> {
+                    saveLeaderBoard();
+                    bus.post(new Events.QuitRequest());
+                }
             }
         } else if (modelState.getState() == ModelState.State.GAME_PAUSE_MENU) {
             switch (modelState.getSelectedMenu()) {
@@ -86,8 +107,13 @@ public class ModelLogic {
                     modelState.setState(ModelState.State.GAME);
                     bus.post(new Events.RenderRefresh());
                 }
-                case 2 -> bus.post(new Events.RenderRefresh());
-                case 3 -> bus.post(new Events.QuitRequest());
+                case 2 -> {
+                    loadLeaderBoard();
+                                    }
+                case 3 -> {
+                    saveLeaderBoard();
+                    bus.post(new Events.QuitRequest());
+                }
             }
         }
     }
@@ -127,7 +153,60 @@ public class ModelLogic {
         bus.post(new Events.RenderRefresh());
     }
 
+    private void loadLeaderBoard() {
+        try {
+            // формируем лидеров и добавляем у ним ткущую попытку
+            List<Leader> leaderboard = FormingLeaderboard.getLeaderBoard();
+            leaderboard.add(formingPlayerStatsForLeaderboard(true));
+
+            // сортируем по сокровищам
+            leaderboard.sort(Comparator.comparingInt(Leader::getTreasure).reversed());
+
+            // сохраняем в modelStaTE
+            modelState.setLeaderboard(leaderboard);
+
+            modelState.setState(ModelState.State.HALL_OF_FAME);
+            bus.post(new Events.RenderRefresh());
+        } catch (IOException e) {
+            // мягко: вернуть в меню + можно сохранить сообщение в state
+            modelState.setState(ModelState.State.MENU);
+            // modelState.setLastError("Cannot read leaderboard");
+            bus.post(new Events.RenderRefresh());
+        }
+    }
+
+    private void saveLeaderBoard() {
+        try {
+            // формируем лидеров и добавляем у ним ткущую попытку
+            List<Leader> leaderboard = FormingLeaderboard.getLeaderBoard();
+            leaderboard.add(formingPlayerStatsForLeaderboard(false));
+
+            // сортируем по сокровищам
+            leaderboard.sort(Comparator.comparingInt(Leader::getTreasure).reversed());
+
+            // сохраняем в modelStaTE
+            modelState.setLeaderboard(leaderboard);
+
+            FormingLeaderboard.saveLeaderBoard(leaderboard);
+
+        } catch (IOException e) {}
+
+    }
 
 
-
+    public Leader formingPlayerStatsForLeaderboard(boolean current) {
+        return new Leader(
+                modelState.getUserName(),
+                gameState.getPlayerState().getTreasure(),
+                gameState.getMapState().getDungeonLevel(),
+                gameState.getPlayerState().getCountOfKills(),
+                gameState.getPlayerState().getCountOfFood(),
+                gameState.getPlayerState().getCountOfDrinks(),
+                gameState.getPlayerState().getCountOfBooks(),
+                gameState.getPlayerState().getCountOfMissedStrikes(),
+                gameState.getPlayerState().getCountOfHit(),
+                gameState.getPlayerState().getCountOfSteps(),
+                current
+        );
+    }
 }

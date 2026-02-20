@@ -1,7 +1,7 @@
 package model.gamestate;
 
 
-public class Monster {
+abstract class Monster {
     private enum monsterKind{
         ZOMBIE,
         VAMPIRE,
